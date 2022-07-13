@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FC } from 'react';
+import { useAppDispatch, useAppSelector } from './hooks/redux';
 
-function App() {
+import './App.css';
+import { decrement, increment, login } from './actions';
+
+const App: FC = () => {
+  const counter = useAppSelector((state) => state.counter);
+  const isLogin = useAppSelector((state) => state.isLogin);
+  const dispatch = useAppDispatch();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Hello Redux(TS)</h1>
+      <h3>カウント：{counter}</h3>
+      <button onClick={() => dispatch(increment(5))}>+</button>
+      <button onClick={() => dispatch(decrement())}>-</button>
+      <h3>{isLogin ? 'ログイン済み' : 'ログインしてください'}</h3>
+      <button onClick={() => dispatch(login())}>
+        {isLogin ? 'ログアウト' : 'ログイン'}
+      </button>
     </div>
   );
-}
+};
 
 export default App;
